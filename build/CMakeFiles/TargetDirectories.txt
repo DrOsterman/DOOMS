@@ -1,0 +1,9 @@
+/Users/ryanmatimu/Apocalypse/build/CMakeFiles/Apocalypse.dir
+/Users/ryanmatimu/Apocalypse/build/CMakeFiles/edit_cache.dir
+/Users/ryanmatimu/Apocalypse/build/CMakeFiles/rebuild_cache.dir
+/Users/ryanmatimu/Apocalypse/build/extern/glfw/CMakeFiles/edit_cache.dir
+/Users/ryanmatimu/Apocalypse/build/extern/glfw/CMakeFiles/rebuild_cache.dir
+/Users/ryanmatimu/Apocalypse/build/extern/glfw/src/CMakeFiles/glfw.dir
+/Users/ryanmatimu/Apocalypse/build/extern/glfw/src/CMakeFiles/update_mappings.dir
+/Users/ryanmatimu/Apocalypse/build/extern/glfw/src/CMakeFiles/edit_cache.dir
+/Users/ryanmatimu/Apocalypse/build/extern/glfw/src/CMakeFiles/rebuild_cache.dir

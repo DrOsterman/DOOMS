@@ -1,0 +1,9 @@
+{
+	"InstallScripts" : 
+	[
+		"/Users/ryanmatimu/Apocalypse/build/cmake_install.cmake",
+		"/Users/ryanmatimu/Apocalypse/build/extern/glfw/cmake_install.cmake",
+		"/Users/ryanmatimu/Apocalypse/build/extern/glfw/src/cmake_install.cmake"
+	],
+	"Parallel" : false
+}
