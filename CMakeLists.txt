@@ -23,8 +23,12 @@ set(BX_DIR ${CMAKE_SOURCE_DIR}/extern/bx)
 set(BIMG_DIR ${CMAKE_SOURCE_DIR}/extern/bimg)
 set(GLFW_DIR ${CMAKE_SOURCE_DIR}/extern/glfw)
 
-# Add GLFW to the build
-add_subdirectory(${GLFW_DIR})
+## Add GLFW to the build
+#add_subdirectory(${GLFW_DIR})
+
+include_directories(/opt/homebrew/include/SDL2)
+link_directories(/opt/homebrew/lib)
+
 
 if(APPLE)
     set_source_files_properties(
@@ -159,7 +163,9 @@ endif ()
 
 # link to the binaries we just defined/built
 target_link_libraries(Apocalypse
-        glfw ${GLFW_LIBRARIES} bgfx bx bimg
+        -lSDL2
+#        glfw ${GLFW_LIBRARIES}
+        bgfx bx bimg
         "-framework Metal"
         "-framework Cocoa"
         "-framework IOKit"
