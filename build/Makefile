@@ -118,7 +118,7 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named Apocalypse
+# Target rules for targets named DOOMS
 
 # Build rule for target.
 Apocalypse: cmake_check_build_system

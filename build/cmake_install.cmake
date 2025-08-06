@@ -1,4 +1,4 @@
-# Install script for directory: /Users/ryanmatimu/Apocalypse
+# Install script for directory: /Users/ryanmatimu/DOOMS
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

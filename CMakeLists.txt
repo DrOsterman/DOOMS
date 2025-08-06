@@ -1,15 +1,25 @@
 cmake_minimum_required(VERSION 3.14)
 
-project(Apocalypse)
+project(DOOMS)
 
 
 set(SRCS "src/main.cpp")
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
 
 # Disable unneeded GLFW features
 set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
 set(GLFW_BUILD_TESTS OFF CACHE BOOL "" FORCE)
 set(GLFW_BUILD_DOCS OFF CACHE BOOL "" FORCE)
 set(GLFW_INSTALL OFF CACHE BOOL "" FORCE)
+
+
+# setting shaders
+
+# Define shader source folder and destination folder
+set(SHADER_SOURCE_DIR ${CMAKE_SOURCE_DIR}/extern/bgfx/examples/runtime/shaders)
+set(SHADER_DEST_DIR ${CMAKE_BINARY_DIR}/shaders)
 
 
 # Resources path macro to resources file path
@@ -118,7 +128,7 @@ MakeBGLib(bimg)
 
 
 file(GLOB_RECURSE MY_SOURCES CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp")
-add_executable(Apocalypse ${MY_SOURCES})
+add_executable(DOOMS ${MY_SOURCES})
 
 target_include_directories(bgfx PRIVATE "${BX_DIR}/include" "${BIMG_DIR}/include"
         "${BGFX_DIR}/3rdparty/directx-headers/include/directx"
@@ -151,18 +161,18 @@ target_include_directories(bimg PRIVATE "${BX_DIR}/include"
         "${BIMG_DIR}/3rdparty/tinyexr/deps/miniz"
         "${BIMG_DIR}/3rdparty/nvtt")
 
-target_include_directories(Apocalypse SYSTEM PRIVATE "./src"
+target_include_directories(DOOMS SYSTEM PRIVATE "./src"
         "extern/bgfx/include" "extern/bimg/include" "extern/bx/include"
         "extern/glfw-3.3.8/include")
 
 if (MSVC)
-    target_include_directories(Apocalypse SYSTEM PRIVATE "extern/bx/include/compat/msvc")
+    target_include_directories(DOOMS SYSTEM PRIVATE "extern/bx/include/compat/msvc")
     set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug")
     set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Release>:Release")
 endif ()
 
 # link to the binaries we just defined/built
-target_link_libraries(Apocalypse
+target_link_libraries(DOOMS
         -lSDL2
 #        glfw ${GLFW_LIBRARIES}
         bgfx bx bimg
@@ -171,4 +181,12 @@ target_link_libraries(Apocalypse
         "-framework IOKit"
         "-framework QuartzCore"
         "-framework MetalKit")
+
+# Copy shaders after build
+add_custom_command(
+        TARGET DOOMS POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_directory
+        ${SHADER_SOURCE_DIR}
+        ${SHADER_DEST_DIR}
+)
 

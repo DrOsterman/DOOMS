@@ -143,8 +143,8 @@ events:
     checks:
       - "Detecting C compiler ABI info"
     directories:
-      source: "/Users/ryanmatimu/Apocalypse/build/CMakeFiles/CMakeScratch/TryCompile-nFl4h7"
-      binary: "/Users/ryanmatimu/Apocalypse/build/CMakeFiles/CMakeScratch/TryCompile-nFl4h7"
+      source: "/Users/ryanmatimu/DOOMS/build/CMakeFiles/CMakeScratch/TryCompile-nFl4h7"
+      binary: "/Users/ryanmatimu/DOOMS/build/CMakeFiles/CMakeScratch/TryCompile-nFl4h7"
     cmakeVariables:
       CMAKE_C_FLAGS: ""
       CMAKE_C_FLAGS_DEBUG: "-g"
@@ -339,8 +339,8 @@ events:
     checks:
       - "Detecting CXX compiler ABI info"
     directories:
-      source: "/Users/ryanmatimu/Apocalypse/build/CMakeFiles/CMakeScratch/TryCompile-hI6ofL"
-      binary: "/Users/ryanmatimu/Apocalypse/build/CMakeFiles/CMakeScratch/TryCompile-hI6ofL"
+      source: "/Users/ryanmatimu/DOOMS/build/CMakeFiles/CMakeScratch/TryCompile-hI6ofL"
+      binary: "/Users/ryanmatimu/DOOMS/build/CMakeFiles/CMakeScratch/TryCompile-hI6ofL"
     cmakeVariables:
       CMAKE_CXX_FLAGS: ""
       CMAKE_CXX_FLAGS_DEBUG: "-g"
@@ -545,13 +545,13 @@ events:
     checks:
       - "Performing Test CMAKE_HAVE_LIBC_PTHREAD"
     directories:
-      source: "/Users/ryanmatimu/Apocalypse/build/CMakeFiles/CMakeScratch/TryCompile-ZpMeYI"
-      binary: "/Users/ryanmatimu/Apocalypse/build/CMakeFiles/CMakeScratch/TryCompile-ZpMeYI"
+      source: "/Users/ryanmatimu/DOOMS/build/CMakeFiles/CMakeScratch/TryCompile-ZpMeYI"
+      binary: "/Users/ryanmatimu/DOOMS/build/CMakeFiles/CMakeScratch/TryCompile-ZpMeYI"
     cmakeVariables:
       CMAKE_C_FLAGS: ""
       CMAKE_C_FLAGS_DEBUG: "-g"
       CMAKE_EXE_LINKER_FLAGS: ""
-      CMAKE_MODULE_PATH: "/Users/ryanmatimu/Apocalypse/extern/glfw/CMake/modules"
+      CMAKE_MODULE_PATH: "/Users/ryanmatimu/DOOMS/extern/glfw/CMake/modules"
       CMAKE_MSVC_RUNTIME_LIBRARY: "MultiThreaded$<$<CONFIG:Release>:Release"
       CMAKE_OSX_ARCHITECTURES: ""
       CMAKE_OSX_DEPLOYMENT_TARGET: ""
@@ -643,11 +643,11 @@ events:
     checks:
       - "Detecting OBJC compiler ABI info"
     directories:
-      source: "/Users/ryanmatimu/Apocalypse/build/CMakeFiles/CMakeScratch/TryCompile-jfpWak"
-      binary: "/Users/ryanmatimu/Apocalypse/build/CMakeFiles/CMakeScratch/TryCompile-jfpWak"
+      source: "/Users/ryanmatimu/DOOMS/build/CMakeFiles/CMakeScratch/TryCompile-jfpWak"
+      binary: "/Users/ryanmatimu/DOOMS/build/CMakeFiles/CMakeScratch/TryCompile-jfpWak"
     cmakeVariables:
       CMAKE_EXE_LINKER_FLAGS: ""
-      CMAKE_MODULE_PATH: "/Users/ryanmatimu/Apocalypse/extern/glfw/CMake/modules"
+      CMAKE_MODULE_PATH: "/Users/ryanmatimu/DOOMS/extern/glfw/CMake/modules"
       CMAKE_MSVC_RUNTIME_LIBRARY: "MultiThreaded$<$<CONFIG:Release>:Release"
       CMAKE_OBJC_FLAGS: ""
       CMAKE_OBJC_FLAGS_DEBUG: "-g"

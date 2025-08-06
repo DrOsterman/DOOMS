@@ -1,4 +1,4 @@
-# Install script for directory: /Users/ryanmatimu/Apocalypse/extern/glfw/src
+# Install script for directory: /Users/ryanmatimu/DOOMS/extern/glfw/src
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
