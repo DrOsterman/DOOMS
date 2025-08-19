@@ -13,6 +13,9 @@
 
 const uint32_t WNDW_WIDTH = 1600;
 const uint32_t WNDW_HEIGHT = 900;
+const int GRID_SIZE = 40;
+const int GRID_SPACING = 1.0f;
+const uint32_t GRID_COLOR = 0xff0000ff;
 
 
 
@@ -58,6 +61,7 @@ static const uint16_t cubeTriangleIndices[] = {
 };
 
 bgfx::ShaderHandle loadShader(const char *filename);
+void createGrid(std::vector<PosColorVertex> &gridVertices, std::vector<uint16_t> &gridIndices);
 
 int main() {
     char cwd[PATH_MAX];
@@ -92,7 +96,7 @@ int main() {
 
     bgfx::Init bgfxInit;
     bgfxInit.platformData = pdata;
-    bgfxInit.type = bgfx::RendererType::Metal;
+    bgfxInit.type = bgfx::RendererType::Vulkan;
     bgfxInit.resolution.width = WNDW_WIDTH;
     bgfxInit.resolution.height = WNDW_HEIGHT;
     bgfxInit.resolution.reset = BGFX_RESET_VSYNC;
@@ -120,15 +124,26 @@ int main() {
             .add(bgfx::Attrib::Position, 3, bgfx::AttribType::Float)
             .add(bgfx::Attrib::Color0, 4, bgfx::AttribType::Uint8, true)
     .end();
-    bgfx::VertexBufferHandle vbh = bgfx::createVertexBuffer(
+    bgfx::VertexBufferHandle cube_vbh = bgfx::createVertexBuffer(
         bgfx::makeRef(cubeVertices, sizeof(cubeVertices)), pcvDecl);
-    bgfx::IndexBufferHandle ibh = bgfx::createIndexBuffer(
+    bgfx::IndexBufferHandle cube_ibh = bgfx::createIndexBuffer(
         bgfx::makeRef(cubeTriangleIndices, sizeof(cubeTriangleIndices)));
+
+    std::vector<PosColorVertex> gridVertices;
+    std::vector<uint16_t> gridIndices;
+    createGrid(gridVertices, gridIndices);
+
+    bgfx::VertexBufferHandle gridVbh = bgfx::createVertexBuffer(
+        bgfx::makeRef(gridVertices.data(), gridVertices.size() * sizeof(PosColorVertex)),pcvDecl);
+    bgfx::IndexBufferHandle gridIbh = bgfx::createIndexBuffer(
+        bgfx::makeRef(gridIndices.data(), gridIndices.size() * sizeof(uint16_t)));
 
 
     bgfx::ShaderHandle vsh = loadShader("vs_cubes.bin");
     bgfx::ShaderHandle fsh = loadShader("fs_cubes.bin");
     bgfx::ProgramHandle program = bgfx::createProgram(vsh, fsh, true);
+
+
 
 
     unsigned int counter = 0;
@@ -144,27 +159,38 @@ int main() {
         bgfx::setViewClear(0, BGFX_CLEAR_COLOR | BGFX_CLEAR_DEPTH, 0x443355FF, 1.0f, 0);
         bgfx::setViewRect(0, 0, 0, WNDW_WIDTH, WNDW_HEIGHT);
 
+        const float distance = 10.0f;
+        const bx::Vec3 eye = {distance, distance, distance};
         const bx::Vec3 at = {0.0f, 0.0f, 0.0f};
-        const bx::Vec3 eye = {0.0f, 0.0f, -5.0f};
         float view[16];
         bx::mtxLookAt(view, eye, at);
-        float proj[16];
-        bx::mtxProj(proj, 60.0f,
-                    float(WNDW_WIDTH) / float(WNDW_HEIGHT),
+        const float width = 10.0f;
+        const float height = width * float(WNDW_HEIGHT) / float(WNDW_WIDTH);
+        float ortho[16];
+        bx::mtxOrtho(ortho, -width,
+                    width,
+                    -height,
+                    height,
                     0.1f,
                     100.0f,
+                    0,
                     bgfx::getCaps()->homogeneousDepth);
-        bgfx::setViewTransform(0, view, proj);
+        bgfx::setViewTransform(0, view, ortho);
         float mtx[16];
-        bx::mtxRotateXY(mtx, counter * 0.01f, counter * 0.01f);
+        bx::mtxIdentity(mtx);
+
+        // bx::mtxRotateXY(mtx, counter * 0.01f, counter * 0.01f);
         bgfx::setTransform(mtx);
-
-        bgfx::setVertexBuffer(0, vbh);
-        bgfx::setIndexBuffer(ibh);
-
+        bgfx::setVertexBuffer(0, cube_vbh);
+        bgfx::setIndexBuffer(cube_ibh);
         bgfx::setState(BGFX_STATE_DEFAULT | BGFX_STATE_CULL_CCW); // or _CCW depending on your winding
+        bgfx::submit(0, program);
 
-        // bgfx::setState(BGFX_STATE_DEFAULT | BGFX_STATE_PT_LINES);
+        bgfx::setVertexBuffer(0, gridVbh);
+        bgfx::setIndexBuffer(gridIbh);
+        bgfx::setState(BGFX_STATE_DEFAULT | BGFX_STATE_PT_LINES);
+
+
 
         bgfx::submit(0, program);
         bgfx::touch(0);
@@ -220,4 +246,26 @@ bgfx::ShaderHandle loadShader(const char *filename) {
     fclose(file);
 
     return bgfx::createShader(mem);
+}
+
+void createGrid(std::vector<PosColorVertex> &gridVertices, std::vector<uint16_t> &gridIndices) {
+    for (int i = 0; i <= GRID_SIZE; i++) {
+        for (int j = 0; j <= GRID_SIZE; j++) {
+            float x =  (float) (i - GRID_SIZE / 2)* GRID_SPACING;
+            float z = (float) (j - GRID_SIZE / 2) * GRID_SPACING;
+            gridVertices.push_back({x, 0.0f, z, GRID_COLOR});
+        }
+    }
+    for (int i = 0; i <= GRID_SIZE ; i++) {
+        for (int j = 0; j < GRID_SIZE; j++) {
+            gridIndices.push_back(i * (GRID_SIZE + 1) + j);
+            gridIndices.push_back(i * (GRID_SIZE + 1) + j + 1);
+        }
+    }
+    for (int j = 0; j <= GRID_SIZE; j++) {
+        for (int i = 0; i < GRID_SIZE; i++) {
+            gridIndices.push_back(i * (GRID_SIZE + 1) + j);
+            gridIndices.push_back( (i + 1) * (GRID_SIZE + 1) + j);
+        }
+    }
 }
