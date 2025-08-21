@@ -128,7 +128,12 @@ MakeBGLib(bimg)
 
 
 file(GLOB_RECURSE MY_SOURCES CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp")
-add_executable(DOOMS ${MY_SOURCES})
+add_executable(DOOMS ${MY_SOURCES}
+        src/core/grid.h
+        src/core/grid.cpp
+        src/core/primitives.h
+        src/core/camera.h
+        src/core/camera.cpp)
 
 target_include_directories(bgfx PRIVATE "${BX_DIR}/include" "${BIMG_DIR}/include"
         "${BGFX_DIR}/3rdparty/directx-headers/include/directx"

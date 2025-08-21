@@ -10,21 +10,13 @@
 # include "bgfx/platform.h"
 # include "bx/math.h"
 # include <unistd.h> // for getcwd
+# include "core/grid.h"
+# include "core/primitives.h"
 
 const uint32_t WNDW_WIDTH = 1600;
 const uint32_t WNDW_HEIGHT = 900;
-const int GRID_SIZE = 40;
-const int GRID_SPACING = 1.0f;
-const uint32_t GRID_COLOR = 0xff0000ff;
 
 
-
-struct PosColorVertex {
-    float x;
-    float y;
-    float z;
-    uint32_t abgr;
-};
 
 static PosColorVertex cubeVertices[] = {
     // Front face
@@ -61,7 +53,6 @@ static const uint16_t cubeTriangleIndices[] = {
 };
 
 bgfx::ShaderHandle loadShader(const char *filename);
-void createGrid(std::vector<PosColorVertex> &gridVertices, std::vector<uint16_t> &gridIndices);
 
 int main() {
     char cwd[PATH_MAX];
@@ -246,26 +237,4 @@ bgfx::ShaderHandle loadShader(const char *filename) {
     fclose(file);
 
     return bgfx::createShader(mem);
-}
-
-void createGrid(std::vector<PosColorVertex> &gridVertices, std::vector<uint16_t> &gridIndices) {
-    for (int i = 0; i <= GRID_SIZE; i++) {
-        for (int j = 0; j <= GRID_SIZE; j++) {
-            float x =  (float) (i - GRID_SIZE / 2)* GRID_SPACING;
-            float z = (float) (j - GRID_SIZE / 2) * GRID_SPACING;
-            gridVertices.push_back({x, 0.0f, z, GRID_COLOR});
-        }
-    }
-    for (int i = 0; i <= GRID_SIZE ; i++) {
-        for (int j = 0; j < GRID_SIZE; j++) {
-            gridIndices.push_back(i * (GRID_SIZE + 1) + j);
-            gridIndices.push_back(i * (GRID_SIZE + 1) + j + 1);
-        }
-    }
-    for (int j = 0; j <= GRID_SIZE; j++) {
-        for (int i = 0; i < GRID_SIZE; i++) {
-            gridIndices.push_back(i * (GRID_SIZE + 1) + j);
-            gridIndices.push_back( (i + 1) * (GRID_SIZE + 1) + j);
-        }
-    }
 }
